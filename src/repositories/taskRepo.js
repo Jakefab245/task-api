@@ -7,7 +7,7 @@ export async function findAll() {
 export async function findByCompletionStatus(isCompleted){ 
   return prisma.task.findMany({ 
       where: { completed: isCompleted }
-  })
+  });
 }
 
 
