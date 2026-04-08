@@ -1,6 +1,17 @@
 import * as taskService from '../services/taskService.js';
+import { getTasksByCompletionStatus } from '../services/taskService.js';
 
-export async function getTasks(req, res, next) {
+export async function getTasks(req, res, next) { 
+  const {completed} = req.query; //Need to make this optional for case where no query parameter is provided 
+  if( completed) { 
+    const isCompleted = completed.toLowerCase() === 'true'; 
+    const filteredTasks = await getTasksByCompletionStatus(isCompleted); 
+    res.json(filteredTasks);
+  } else if (completed && completed.toLowerCase() === 'false') { 
+    const notCompleted = completed.toLowerCase() === 'false'; 
+    const incompletedFilteredTasks = await getTasksByCompletionStatus(notCompleted); 
+    res.json(incompletedFilteredTasks);
+  }
   const tasks = await taskService.getAllTasks();
   res.json(tasks);
 }

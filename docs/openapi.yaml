@@ -18,6 +18,8 @@ paths:
       summary: List all tasks
       tags:
         - Tasks
+      parameters: 
+        - $ref: '#/components/parameters/completed'
       responses:
         '200':
           description: OK
@@ -27,6 +29,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Task'
+        '400': 
+          $ref: '#/components/responses/InvalidParameter' 
     post:
       summary: Create a new task
       tags:
@@ -92,3 +96,23 @@ components:
         completed:
           type: boolean
           example: false
+  parameters: 
+    completed: 
+      name: completed 
+      in: query 
+      description: Filter tasks by completion status
+      required: false
+      schema:
+        type: boolean
+        example: false 
+  responses: 
+    InvalidParameter: 
+      description: Invalid query parameter provided 
+      content: 
+        application/json: 
+          schema: 
+            type: object 
+            properties: 
+              error: 
+                type: string 
+                example: Invalid value for 'completed' parameter. Must be true or false.
