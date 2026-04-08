@@ -17,7 +17,7 @@ export async function getTasks(req, res, next) {
     res.status(400).json({error: 'Invalid query parameter'});
   }
   const tasks = await taskService.getAllTasks();
-  res.json(tasks);
+  res.status(200).json(tasks);
 }
 
 export async function createTask(req, res, next) {
