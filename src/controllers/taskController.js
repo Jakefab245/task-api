@@ -6,18 +6,17 @@ export async function getTasks(req, res, next) {
   if (completed) { 
     const isCompleted = completed.toLowerCase() === 'true'; 
     const filteredTasks = await getTasksByCompletionStatus(isCompleted); 
-    res.json(filteredTasks);
+    return res.json(filteredTasks);
   } if (completed && completed.toLowerCase() === 'false') { 
     const notCompleted = completed.toLowerCase() === 'false'; 
     const incompletedFilteredTasks = await getTasksByCompletionStatus(notCompleted); 
-    res.json(incompletedFilteredTasks);
+    return res.json(incompletedFilteredTasks);
   }
   if (completed && completed.toLowerCase() !== 'true' && completed.toLowerCase() !== 'false') {  
-    await next(); // Passing to error handling middleware! 
-    res.status(400).json({error: 'Invalid query parameter'});
+    return res.status(400).json({error: 'Invalid query parameter'});
   }
   const tasks = await taskService.getAllTasks();
-  res.status(200).json(tasks);
+  return res.status(200).json(tasks);
 }
 
 export async function createTask(req, res, next) {
