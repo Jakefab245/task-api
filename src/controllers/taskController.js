@@ -12,7 +12,8 @@ export async function getTasks(req, res, next) {
     const incompletedFilteredTasks = await getTasksByCompletionStatus(notCompleted); 
     return res.json(incompletedFilteredTasks);
   }
-  if (completed.toLowerCase() !== 'true' && completed.toLowerCase() !== 'false') {  
+  if (completed && completed.toLowerCase() !== 'true' && completed.toLowerCase() !== 'false') {  
+    await next(); // Passing to error handling middleware! 
     return res.status(400).json({error: 'Invalid query parameter'});
   }
   const tasks = await taskService.getAllTasks();
