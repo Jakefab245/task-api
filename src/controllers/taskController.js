@@ -8,7 +8,7 @@ export async function getTasks(req, res, next) {
     const filteredTasks = await getTasksByCompletionStatus(isCompleted); 
     res.json(filteredTasks);
   } else  if (completed && completed.toLowerCase() === 'false') { 
-    const notCompleted = completed.toLowerCase(); 
+    const notCompleted = completed.toLowerCase() === 'true'; 
     const incompletedFilteredTasks = await getTasksByCompletionStatus(notCompleted); 
     res.json(incompletedFilteredTasks);
   } 
