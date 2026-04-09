@@ -13,7 +13,8 @@ export const validateTask = [
 
   body('completed')
     .optional()
-    .isBoolean()
+    .isBoolean() 
+    .contains( ['true', 'false'], {ignoreCase: true})
     .withMessage('completed must be true or false'),
 
   checkValidationResults,
